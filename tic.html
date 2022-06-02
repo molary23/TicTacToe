@@ -12,10 +12,14 @@
   </head>
   <body>
     <div class="inner">
-      <h1>Tic Tac Toe Game</h1>
-      <button class="start-toss">Toss</button>
-      <button class="restart">Restart</button>
-      <h3 class="turn">Toss to start</h3>
+      <div class="game-heading">
+        <h1>Tic Tac Toe Game</h1>
+        <h3 class="turn">Toss to start</h3>
+        <div class="start-btn">
+          <button class="start-toss">Toss</button>
+          <button class="restart">Restart</button>
+        </div>
+      </div>
       <div class="game-body">
         <div class="player-one">
           <h3>Player 1</h3>
@@ -27,6 +31,7 @@
           </div>
           <p class="selectedTileP1"></p>
         </div>
+
         <div class="game-show">
           <div class="cell" id="cell-one"></div>
           <div class="cell" id="cell-two"></div>
@@ -145,12 +150,15 @@
             elm = placeItem(item, player2);
             playing = 1;
           }
+          let win = false;
           if (elm === player1) {
+            win = true;
             alert(`Player 1 wins`);
             gameBody.classList.add("game-over");
             p1 += 1;
             p1_score.innerHTML = p1;
           } else if (elm === player2) {
+            win = true;
             alert(`Player 2 wins`);
             gameBody.classList.add("game-over");
             p2 += 1;
@@ -169,7 +177,7 @@
           nine.innerHTML,
         ];
 
-        if (boardArray.every((elm) => elm !== "")) {
+        if (boardArray.every((elm) => elm !== "") && !win) {
           alert("Game Over! No winner! Please Restart");
           gameBody.classList.add("game-over");
         }
@@ -259,10 +267,39 @@
     }
   </script>
   <style>
+    .inner {
+      width: 90%;
+      margin: 0px auto;
+    }
+
+    button {
+      background: rgba(78, 140, 245, 0.9);
+      border: 1px solid #fff;
+      color: #fff;
+      width: 30%;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .game-heading {
+      margin: 0px auto;
+    }
+    .game-heading h1,
+    .game-heading h3 {
+      text-align: center;
+    }
+    .start-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .start-btn button {
+      margin: 0px 5px;
+    }
     .game-show {
       width: 400px;
       height: 400px;
-      background: #aaa;
       margin: 20px auto;
       padding: 10px;
       border-radius: 10px;
@@ -283,12 +320,13 @@
     }
     .game-body {
       width: 800px;
-      background: red;
+      background: rgb(98, 190, 240);
       margin: 20px auto;
       padding: 20px;
       display: grid;
       grid-template-columns: 2fr 6fr 2fr;
       gap: 10px;
+      border-radius: 10px;
     }
     .game-over {
       pointer-events: none;
